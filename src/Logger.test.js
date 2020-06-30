@@ -122,575 +122,4067 @@ describe('createLogger', () => {
 
 describe('MyFancyLogger extends Logger', () => {
     class MyFancyLogger extends Logger {}
-    const $options = { name: 'testApp', namespace: 'testNamespace' };
-    const $fancyMetadata = {
-        alpha: 'alpha.test',
-        bravo: 'bravo.test',
-    };
     describe('when called', () => {
-        const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
-        test('it returns instance of Logger', () => {
-            expect($myFancyLogger).toBeInstanceOf(Logger);
+        describe('when loglevel = LoggerLevel.silly', () => {
+            const $options = {
+                name: 'testApp',
+                namespace: 'testNamespace',
+                level: LoggerLevel.silly,
+            };
+            const $fancyMetadata = {
+                alpha: 'alpha.test',
+                bravo: 'bravo.test',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
+                            });
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.warn, $myFancyChildLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.info, $myFancyChildLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.trace, $myFancyChildLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
         });
-        describe('logger method', () => {
-            describe('fatal', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.fatal).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.fatal($data);
+        describe('when loglevel = LoggerLevel.trace', () => {
+            const $options = {
+                name: 'testApp1',
+                namespace: 'testNamespace1',
+                level: LoggerLevel.trace,
+            };
+            const $fancyMetadata = {
+                alpha1: 'alpha.test1',
+                bravo1: 'bravo.test1',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
                     });
-                    test('calls expected stderr with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
-                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
                     });
                 });
             });
-            describe('error', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.error).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.error($data);
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
                     });
-                    test('writes to expected stderr with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
-                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
+                            });
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.warn, $myFancyChildLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.info, $myFancyChildLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.trace, $myFancyChildLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
                     });
                 });
-            });
-            describe('warn', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.warn).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.warn($data);
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
                     });
-                    test('writes to expected stdout with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
-                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
                     });
                 });
-            });
-            describe('debug', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.debug).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.debug($data);
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
                     });
-                    test('writes to expected stdout with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
-                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                    });
-                });
-            });
-            describe('info', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.info).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.info($data);
-                    });
-                    test('writes to expected stdout with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
-                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                    });
-                });
-            });
-            describe('trace', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.trace).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.trace($data);
-                    });
-                    test('writes to expected stdout with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
-                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                    });
-                });
-            });
-            describe('silly', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.silly).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $data = {
-                        foo: 'test.foo',
-                        bar: 'test.bar',
-                    };
-                    beforeAll(() => {
-                        $myFancyLogger.silly($data);
-                    });
-                    test('writes to expected stdout with expected payload', () => {
-                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
-                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
                     });
                 });
             });
         });
-        describe('method', () => {
-            describe('child', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.child).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $superFancyMetadata = {
-                        fancy: 'shmancy',
-                    };
-                    const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
-                    test('it returns expected Logger', () => {
-                        expect($myFancyChildLogger).toBeInstanceOf(Logger);
-                        expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
-                        expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
-                        expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
-                        expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
-                        expect($myFancyChildLogger.metadata).toMatchObject({
-                            ... $fancyMetadata,
-                            ... $superFancyMetadata,
+        describe('when loglevel = LoggerLevel.info', () => {
+            const $options = {
+                name: 'testApp2',
+                namespace: 'testNamespace2',
+                level: LoggerLevel.info,
+            };
+            const $fancyMetadata = {
+                alpha2: 'alpha.test2',
+                bravo2: 'bravo.test2',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
-                    describe('logger method', () => {
-                        describe('fatal', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.fatal).toBeFunction();
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
                             });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.fatal($data);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
                                 });
-                                test('calls expected stderr with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.warn, $myFancyChildLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.info, $myFancyChildLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('error', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.error).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.error($data);
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stderr with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('warn', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.warn).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.warn($data);
-                                });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.warn, $myFancyChildLogger.construct_message(LoggerLevel.warn, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                                });
-                            });
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
                         });
-                        describe('debug', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.debug).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.debug($data);
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                                });
-                            });
-                        });
-                        describe('info', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.info).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.info($data);
-                                });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.info, $myFancyChildLogger.construct_message(LoggerLevel.info, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
-                        });
-                        describe('trace', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.trace).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.trace($data);
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.trace, $myFancyChildLogger.construct_message(LoggerLevel.trace, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
-                        });
-                        describe('silly', () => {
-                            test('is Function', () => {
-                                expect($myFancyChildLogger.silly).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $myFancyChildLogger.silly($data);
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
                     });
                 });
             });
-            describe('sibling', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.sibling).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $namespace = 'super_fancy_namespace';
-                    const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
-                    test('it returns expected Logger', () => {
-                        expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
-                        expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
-                        expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
-                        expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+        });
+        describe('when loglevel = LoggerLevel.warn', () => {
+            const $options = {
+                name: 'testApp3',
+                namespace: 'testNamespace3',
+                level: LoggerLevel.warn,
+            };
+            const $fancyMetadata = {
+                alpha1: 'alpha.test1',
+                bravo1: 'bravo.test1',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
                     });
-                    describe('logger method', () => {
-                        describe('fatal', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
                             });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.fatal($data);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
                                 });
-                                test('calls expected stderr with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.warn, $myFancyChildLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('error', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.error).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.error($data);
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stderr with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('warn', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.warn).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.warn($data);
-                                });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                                });
-                            });
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
                         });
-                        describe('debug', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.debug).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.debug($data);
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
-                                });
-                            });
-                        });
-                        describe('info', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.info).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.info($data);
-                                });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
-                        });
-                        describe('trace', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.trace).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.trace($data);
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
-                        });
-                        describe('silly', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.silly).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.silly($data);
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
                     });
                 });
             });
-            describe('type', () => {
-                test('is Function', () => {
-                    expect($myFancyLogger.type).toBeFunction();
-                });
-                describe('when called', () => {
-                    const $namespace = 'super_fancy_namespace';
-                    const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
-                    test('it returns expected Logger', () => {
-                        expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
-                        expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
-                        expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
-                        expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+        });
+        describe('when loglevel = LoggerLevel.debug', () => {
+            const $options = {
+                name: 'testApp4',
+                namespace: 'testNamespace4',
+                level: LoggerLevel.debug,
+            };
+            const $fancyMetadata = {
+                alpha4: 'alpha.test4',
+                bravo4: 'bravo.test4',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
                     });
-                    describe('logger method', () => {
-                        describe('fatal', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('writes to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
                             });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.fatal($data);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
                                 });
-                                test('calls expected stderr with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.debug, $myFancyChildLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('error', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.error).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.error($data);
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stderr with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
-                                    expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('warn', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.warn).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.warn($data);
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.warn, $mySuperFancySiblingLogger.construct_message(LoggerLevel.warn, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('writes to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('debug', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                    });
+                });
+            });
+        });
+        describe('when loglevel = LoggerLevel.error', () => {
+            const $options = {
+                name: 'testApp5',
+                namespace: 'testNamespace5',
+                level: LoggerLevel.error,
+            };
+            const $fancyMetadata = {
+                alpha5: 'alpha.test5',
+                bravo5: 'bravo.test5',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('writes to expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
                             });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.debug($data);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.debug, $mySuperFancySiblingLogger.construct_message(LoggerLevel.debug, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.error, $myFancyChildLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('info', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.info).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.info($data);
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.info, $mySuperFancySiblingLogger.construct_message(LoggerLevel.info, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('trace', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.trace).toBeFunction();
-                            });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.trace($data);
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.trace, $mySuperFancySiblingLogger.construct_message(LoggerLevel.trace, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('writes to expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.error, $mySuperFancySiblingLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });
-                        describe('silly', () => {
-                            test('is Function', () => {
-                                expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                    });
+                });
+            });
+        });
+        describe('when loglevel = LoggerLevel.fatal', () => {
+            const $options = {
+                name: 'testApp6',
+                namespace: 'testNamespace6',
+                level: LoggerLevel.fatal,
+            };
+            const $fancyMetadata = {
+                alpha5: 'alpha.test5',
+                bravo5: 'bravo.test5',
+            };
+            const $myFancyLogger = new MyFancyLogger($options, $fancyMetadata);
+            test('it returns instance of Logger', () => {
+                expect($myFancyLogger).toBeInstanceOf(Logger);
+            });
+            describe('logger method', () => {
+                describe('fatal', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.fatal).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.fatal($data);
+                        });
+                        test('calls expected stderr with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.fatal, $myFancyLogger.construct_message(LoggerLevel.fatal, $data));
+                            expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('error', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.error).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.error($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('debug', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.debug).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.debug($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('warn', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.warn).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.warn($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('info', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.info).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.info($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('trace', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.trace).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.trace($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+                describe('silly', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.silly).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $data = {
+                            foo: 'test.foo',
+                            bar: 'test.bar',
+                        };
+                        beforeAll(() => {
+                            $myFancyLogger.silly($data);
+                        });
+                        test('does NOT write to expected stdout with expected payload', () => {
+                            const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.silly, $myFancyLogger.construct_message(LoggerLevel.silly, $data));
+                            expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                        });
+                    });
+                });
+            });
+            describe('method', () => {
+                describe('child', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.child).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $superFancyMetadata = {
+                            fancy: 'shmancy',
+                        };
+                        const $myFancyChildLogger = $myFancyLogger.child($superFancyMetadata);
+                        test('it returns expected Logger', () => {
+                            expect($myFancyChildLogger).toBeInstanceOf(Logger);
+                            expect($myFancyChildLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($myFancyChildLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($myFancyChildLogger.options.namespace).toBe($myFancyLogger.options.namespace);
+                            expect($myFancyChildLogger.metadata).toBeInstanceOf(Object);
+                            expect($myFancyChildLogger.metadata).toMatchObject({
+                                ... $fancyMetadata,
+                                ... $superFancyMetadata,
                             });
-                            describe('when called', () => {
-                                const $data = {
-                                    foo: 'test.foo',
-                                    bar: 'test.bar',
-                                };
-                                beforeAll(() => {
-                                    $mySuperFancySiblingLogger.silly($data);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.fatal).toBeFunction();
                                 });
-                                test('writes to expected stdout with expected payload', () => {
-                                    const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
-                                    expect(console.log).toHaveBeenCalledWith($expectedMessage);
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.fatal, $myFancyChildLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.error($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($myFancyChildLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $myFancyChildLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyChildLogger.serialize(LoggerLevel.silly, $myFancyChildLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+                describe('sibling', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.sibling).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.sibling($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+                describe('type', () => {
+                    test('is Function', () => {
+                        expect($myFancyLogger.type).toBeFunction();
+                    });
+                    describe('when called', () => {
+                        const $namespace = 'super_fancy_namespace';
+                        const $mySuperFancySiblingLogger = $myFancyLogger.type($namespace);
+                        test('it returns expected Logger', () => {
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(Logger);
+                            expect($mySuperFancySiblingLogger).toBeInstanceOf(MyFancyLogger);
+                            expect($mySuperFancySiblingLogger.options.name).toBe($myFancyLogger.options.name);
+                            expect($mySuperFancySiblingLogger.options.namespace).toBe($namespace);
+                        });
+                        describe('logger method', () => {
+                            describe('fatal', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.fatal).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.fatal($data);
+                                    });
+                                    test('calls expected stderr with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.fatal, $mySuperFancySiblingLogger.construct_message(LoggerLevel.fatal, $data));
+                                        expect(console.error).toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('error', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.error).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.error($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.error, $myFancyLogger.construct_message(LoggerLevel.error, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('debug', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.debug).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.debug($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.debug, $myFancyLogger.construct_message(LoggerLevel.debug, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('warn', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.warn).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.warn($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.warn, $myFancyLogger.construct_message(LoggerLevel.warn, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('info', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.info).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.info($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.info, $myFancyLogger.construct_message(LoggerLevel.info, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('trace', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.trace).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.trace($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $myFancyLogger.serialize(LoggerLevel.trace, $myFancyLogger.construct_message(LoggerLevel.trace, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
+                                });
+                            });
+                            describe('silly', () => {
+                                test('is Function', () => {
+                                    expect($mySuperFancySiblingLogger.silly).toBeFunction();
+                                });
+                                describe('when called', () => {
+                                    const $data = {
+                                        foo: 'test.foo',
+                                        bar: 'test.bar',
+                                    };
+                                    beforeAll(() => {
+                                        $mySuperFancySiblingLogger.silly($data);
+                                    });
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expectedMessage = $mySuperFancySiblingLogger.serialize(LoggerLevel.silly, $mySuperFancySiblingLogger.construct_message(LoggerLevel.silly, $data));
+                                        expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
+                                    });
                                 });
                             });
                         });

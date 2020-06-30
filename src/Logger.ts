@@ -3,8 +3,8 @@ import flatten from 'flat';
 export enum LoggerLevel {
     fatal,
     error,
-    warn,
     debug,
+    warn,
     info,
     trace,
     silly,
@@ -56,9 +56,11 @@ export class Logger {
     }
 
     public log<TData extends Record<string, any>>(level: LoggerLevel, data: TData): void {
-        const payload_record = this.construct_message(level, data);
-        const payload_str = this.serialize<TData>(level, payload_record);
-        this.write(level, payload_str);
+        if (level <= this.options.level) {
+            const payload_record = this.construct_message(level, data);
+            const payload_str = this.serialize<TData>(level, payload_record);
+            this.write(level, payload_str);
+        }
     }
 
     public fatal<TData>(data: TData): void {
