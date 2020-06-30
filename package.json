@@ -30,5 +30,24 @@
   },
   "dependencies": {
     "flat": "^5.0.0"
-  }
+  },
+  "name": "@specialblend/logger",
+  "description": "type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript",
+  "version": "0.0.0",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/specialblend/logger.git"
+  },
+  "keywords": [
+    "logger"
+  ],
+  "author": "cj@specialblend.net",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/specialblend/logger/issues"
+  },
+  "homepage": "https://github.com/specialblend/logger#readme"
 }

@@ -1,6 +1,6 @@
 # Logger
 
-type-safe, namespaced, normalized JSON appLogger for JavScript and TypeScript
+type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript
 
 ### Install
 
