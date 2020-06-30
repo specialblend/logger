@@ -1,3 +1,5 @@
+import flatten from 'flat';
+
 export enum LoggerLevel {
     fatal,
     error,
@@ -30,7 +32,7 @@ export class Logger {
      * creates a child logger which keeps the parent logger's namespace, and extends the parent logger's data.
      */
     public child(data: JsonableRecord): Logger {
-        return new Logger(this.options, { ... data });
+        return new Logger(this.options, { ...data });
     }
 
     /*
@@ -38,7 +40,7 @@ export class Logger {
      */
     public sibling(namespace: string): Logger {
         const options = {
-            ... this.options,
+            ...this.options,
             namespace,
         };
         return new Logger(options, this.metadata);
@@ -51,36 +53,66 @@ export class Logger {
         return this.sibling(namespace);
     }
 
+    public log<TData extends Record<string, any>>(level: LoggerLevel, data: TData): void {
+        const payload_record = this.construct_message(level, data);
+        const payload_str = this.serialize<TData>(level, payload_record);
+        this.write(level, payload_str);
+    }
+
+    public fatal<TData>(data: TData): void {
+        return this.log(LoggerLevel.fatal, data);
+    }
+
+    public error<TData>(data: TData): void {
+        return this.log(LoggerLevel.error, data);
+    }
+
+    public warn<TData>(data: TData) {
+        return this.log(LoggerLevel.warn, data);
+    }
+
+    public debug<TData>(data: TData) {
+        return this.log(LoggerLevel.debug, data);
+    }
+
+    public info<TData>(data: TData) {
+        return this.log(LoggerLevel.info, data);
+    }
+
+    public trace<TData>(data: TData) {
+        return this.log(LoggerLevel.trace, data);
+    }
+
+    public silly<TData>(data: TData) {
+        return this.log(LoggerLevel.silly, data);
+    }
+
     protected construct_message<T extends JsonableRecord>(level: LoggerLevel, data: T) {
         const { options, metadata } = this;
         const { name, namespace } = options;
         const type = `${name}.${namespace}`;
         const message = {
-            ... metadata,
+            ...metadata,
             name,
             level,
             type,
             [type]: {
-                ... data,
+                ...data,
             },
         };
         return message;
     }
 
-    protected serialize<T extends JsonableRecord>(level: LoggerLevel, payload: JsonableRecord) {
-        return JSON.stringify(payload);
+    protected serialize<T extends JsonableRecord>(level: LoggerLevel, payload: JsonableRecord): string {
+        return JSON.stringify(flatten(payload));
     }
 
-    protected format<T extends Record<string, any>>(level: LoggerLevel, data: T) {
-        return this.serialize(level, this.construct_message<T>(level, data));
+    protected write(level: LoggerLevel, payload: string) {
+        if (level <= LoggerLevel.error) {
+            return console.error(payload);
+        }
+        return console.log(payload);
     }
-
-    public log<T extends Record<string, any>>(level: LoggerLevel, data: T): void {
-        const payload_record = this.construct_message(level, data);
-        const payload_str = this.serialize<T>(level, payload_record);
-        console.log(payload_record);
-    }
-
 }
 
 export default function createLogger(options: LoggerOptions, metadata: JsonableRecord) {
