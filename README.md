@@ -9,6 +9,7 @@ type-safe, namespaced, normalized JSON appLogger for JavScript and TypeScript
 ### Usage
 
 ```
+
 import { Logger, LoggerLevel } from './src/Logger';
 
 (function main() {
@@ -18,15 +19,15 @@ import { Logger, LoggerLevel } from './src/Logger';
         foo: 'test foo',
     });
     appLogger.trace({
-        message: 'I talk too much',
+        message: 'I talk too much.',
         bar: 'test bar',
     });
     appLogger.info({
-        message: 'I am working just fine',
+        message: 'I am working just fine.',
         baz: 'test baz',
     });
     appLogger.debug({
-        message: 'Here is what you want to know',
+        message: 'Here is more information about stuff when stuff broke.',
         foo: 'test foo',
     });
     appLogger.warn({
