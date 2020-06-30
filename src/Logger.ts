@@ -91,7 +91,7 @@ export class Logger {
         const { options, metadata } = this;
         const { name, namespace } = options;
         const type = `${name}.${namespace}`;
-        const message = {
+        return {
             ...metadata,
             name,
             level,
@@ -100,18 +100,25 @@ export class Logger {
                 ...data,
             },
         };
-        return message;
     }
 
     protected serialize<T extends JsonableRecord>(level: LoggerLevel, payload: JsonableRecord): string {
         return JSON.stringify(flatten(payload));
     }
 
+    protected writeStdErr(payload: string) {
+        return console.error(payload);
+    }
+
+    protected writeStdOut(payload: string) {
+        return console.log(payload);
+    }
+
     protected write(level: LoggerLevel, payload: string) {
         if (level <= LoggerLevel.error) {
-            return console.error(payload);
+            return this.writeStdErr(payload);
         }
-        return console.log(payload);
+        return this.writeStdOut(payload);
     }
 }
 
