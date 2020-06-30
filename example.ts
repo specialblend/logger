@@ -26,7 +26,7 @@ import { Logger, LoggerLevel } from './src/Logger';
         message: 'I am not quite dying, but something really bad happened. Fix me.',
         baz: 'test baz',
     });
-    appLogger.error({
+    appLogger.fatal({
         message: 'I am dying because I can\'t handle this error.',
         faz: 'test faz',
     });
