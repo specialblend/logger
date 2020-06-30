@@ -1,13 +1,13 @@
-import main from '../src/main';
+import createLogger from './Logger';
 
-describe('main', () => {
+describe('createLogger', () => {
     test('is Function', () => {
-        expect(main).toBeFunction();
+        expect(createLogger).toBeFunction();
     });
     describe('when called', () => {
         describe('with no arguments', () => {
             test('it returns 0', () => {
-                expect(main()).toBe(0);
+                expect(createLogger()).toBe(0);
             });
         });
     });
