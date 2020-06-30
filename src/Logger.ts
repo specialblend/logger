@@ -31,8 +31,9 @@ export class Logger {
     /*
      * creates a child logger which keeps the parent logger's namespace, and extends the parent logger's data.
      */
-    public child(data: JsonableRecord): Logger {
-        return new Logger(this.options, { ...data });
+    public child(metadata: JsonableRecord): Logger {
+        const __Constructor = this.constructor as new (options: LoggerOptions, metadata: JsonableRecord) => Logger;
+        return new __Constructor(this.options, { ... this.metadata, ... metadata });
     }
 
     /*
@@ -43,7 +44,8 @@ export class Logger {
             ...this.options,
             namespace,
         };
-        return new Logger(options, this.metadata);
+        const __Constructor = this.constructor as new (options: LoggerOptions, metadata: JsonableRecord) => Logger;
+        return new __Constructor(options, this.metadata);
     }
 
     /*
