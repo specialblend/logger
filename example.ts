@@ -1,14 +1,3 @@
-# Logger
-
-type-safe, namespaced, normalized JSON appLogger for JavScript and TypeScript
-
-### Install
-
-`npm install @specialblend/appLogger`
-
-### Usage
-
-```
 import { Logger, LoggerLevel } from './src/Logger';
 
 (function main() {
@@ -42,14 +31,3 @@ import { Logger, LoggerLevel } from './src/Logger';
         faz: 'test faz',
     });
 }());
-
-```
-
-### Philosophy
-
-write logs for machines, not for humans.
-
-- logs should be JSON
-- logs should be typed (namespaced) to 
-  - allow machines to analyze them properly
-  - allow timeseries data storage (e.g. elastic) to index them properly
