@@ -18,6 +18,7 @@ const coveragePathIgnorePatterns = [
     '<rootDir>/jest.config.js',
     '<rootDir>/lib',
     '<rootDir>/scripts',
+    '<rootDir>/example.ts',
 ];
 
 const globalSetup = './__mocks__/environment.js';

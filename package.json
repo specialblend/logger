@@ -18,6 +18,8 @@
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-typescript": "^7.10.1",
     "@specialblend/eslint-config": "^0.5.4",
+    "@specialblend/exceptional": "0.0.5",
+    "@specialblend/tagged-mocks": "0.0.1",
     "@types/flat": "^5.0.1",
     "@types/jest": "^26.0.3",
     "@types/node": "^14.0.14",
@@ -33,7 +35,7 @@
   },
   "name": "@specialblend/logger",
   "description": "type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "directories": {
     "lib": "lib"
   },

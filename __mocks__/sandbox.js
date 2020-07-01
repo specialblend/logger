@@ -2,7 +2,9 @@
 
 (function sandbox() {
     const { Logger, LoggerLevel } = require('../lib/Logger');
-    const appLogger = new Logger({ name: 'myApp', namespace: 'app', level: LoggerLevel.fatal });
+    const { Exception } = require('@specialblend/exceptional');
+    class MyFancyException extends Exception {}
+    const appLogger = new Logger({ name: 'myApp', namespace: 'app', level: LoggerLevel.silly });
     appLogger.silly({
         message: 'you are awesome.',
         foo: 'test foo',
@@ -31,4 +33,5 @@
         message: 'I am dying because I can\'t handle this error.',
         faz: 'test faz',
     });
+    appLogger.exception(new MyFancyException('I am a user friendly exception', { foo: 'test.foo', bar: 'test.bar' }, new Error('I am a not so user friendly Error')));
 }());
