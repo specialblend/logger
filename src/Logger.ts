@@ -24,7 +24,7 @@ export class Logger {
     private metadata: JsonableRecord;
 
     constructor(options: LoggerOptions, metadata: JsonableRecord = {}) {
-        const { name, namespace, level } = options;
+        const { name, namespace, level = LoggerLevel.silly } = options;
         this.options = { name, namespace, level };
         this.metadata = metadata;
     }
