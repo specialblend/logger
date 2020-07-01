@@ -1,3 +1,4 @@
+import type { Exceptional } from '@specialblend/exceptional';
 import flatten from 'flat';
 
 export enum LoggerLevel {
@@ -89,6 +90,15 @@ export class Logger {
 
     public silly<TData>(data: TData) {
         return this.log(LoggerLevel.silly, data);
+    }
+
+    public exception<TException extends Exceptional<TData, Error>, TData>(ex: TException, level: LoggerLevel = LoggerLevel.error) {
+        const { message, code, data, err } = ex;
+        if (typeof err === 'undefined') {
+            return this.log(level, { message, code, data });
+        }
+        const { message: _message, stack } = err;
+        return this.log(level, { message, code, data, err: { message: _message, stack } });
     }
 
     protected construct_message<T extends JsonableRecord>(level: LoggerLevel, data: T) {
