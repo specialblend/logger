@@ -4792,38 +4792,62 @@ describe('MyFancyLogger extends Logger', () => {
             expect($logger.exception).toBeFunction();
         });
         describe('when called', () => {
-            describe('with no log level', () => {
-                const $mocks = taggedMocks('MyFancyLogger->exception');
-                const $exMessage = $mocks.uniqueSafeTag('message');
-                const $err = new Error($mocks.uniqueSafeTag('err'));
-                const $exData = {
-                    foo: $mocks.uniqueSafeTag('foo'),
-                    bar: $mocks.uniqueSafeTag('bar'),
-                    baz: $mocks.uniqueSafeTag('baz'),
-                };
-                const $ex = new Exception($exMessage, $exData, $err);
-                beforeAll(() => {
-                    console.error.mockClear();
-                    $logger.exception($ex);
-                });
-                test('calls console.error with expected payload', () => {
-                    const $expectedData = {
-                        code: 'Exception',
-                        message: $exMessage,
-                        data: $exData,
-                        err: {
-                            message: $err.message,
-                            stack: $err.stack,
-                        },
+            describe('without err', () => {
+                describe('with no log level', () => {
+                    const $mocks = taggedMocks('MyFancyLogger->exception');
+                    const $exMessage = $mocks.uniqueSafeTag('message');
+                    const $exData = {
+                        foo: $mocks.uniqueSafeTag('foo'),
+                        bar: $mocks.uniqueSafeTag('bar'),
+                        baz: $mocks.uniqueSafeTag('baz'),
                     };
-                    const $expectedMessagePayload = $logger.construct_message(LoggerLevel.error, $expectedData);
-                    expect(console.error).toHaveBeenCalledWith(expect.any(String));
-                    const [[$stringPayload]] = console.error.mock.calls;
-                    expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
+                    const $ex = new Exception($exMessage, $exData);
+                    beforeAll(() => {
+                        console.error.mockClear();
+                        $logger.exception($ex);
+                    });
+                    test('calls console.error with expected payload', () => {
+                        const $expectedData = {
+                            code: 'Exception',
+                            message: $exMessage,
+                            data: $exData,
+                        };
+                        const $expectedMessagePayload = $logger.construct_message(LoggerLevel.error, $expectedData);
+                        expect(console.error).toHaveBeenCalledWith(expect.any(String));
+                        const [[$stringPayload]] = console.error.mock.calls;
+                        expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
+                    });
+                });
+                describe('when log level is', () => {
+                    describe.each($LOG_LEVELS)('%s', (_$, $level, $output) => {
+                        const $mocks = taggedMocks('MyFancyLogger->exception');
+                        const $exMessage = $mocks.uniqueSafeTag('message');
+                        const $exData = {
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
+                            baz: $mocks.uniqueSafeTag('baz'),
+                        };
+                        const $ex = new Exception($exMessage, $exData);
+                        beforeAll(() => {
+                            $output.mockClear();
+                            $logger.exception($ex, $level);
+                        });
+                        test('calls expected output with expected payload', () => {
+                            const $expectedData = {
+                                code: 'Exception',
+                                message: $exMessage,
+                                data: $exData,
+                            };
+                            const $expectedMessagePayload = $logger.construct_message($level, $expectedData);
+                            expect($output).toHaveBeenCalledWith(expect.any(String));
+                            const [[$stringPayload]] = $output.mock.calls;
+                            expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
+                        });
+                    });
                 });
             });
-            describe('when log level is', () => {
-                describe.each($LOG_LEVELS)('%s', (_$, $level, $output) => {
+            describe('with err', () => {
+                describe('with no log level', () => {
                     const $mocks = taggedMocks('MyFancyLogger->exception');
                     const $exMessage = $mocks.uniqueSafeTag('message');
                     const $err = new Error($mocks.uniqueSafeTag('err'));
@@ -4834,10 +4858,10 @@ describe('MyFancyLogger extends Logger', () => {
                     };
                     const $ex = new Exception($exMessage, $exData, $err);
                     beforeAll(() => {
-                        $output.mockClear();
-                        $logger.exception($ex, $level);
+                        console.error.mockClear();
+                        $logger.exception($ex);
                     });
-                    test('calls expected output with expected payload', () => {
+                    test('calls console.error with expected payload', () => {
                         const $expectedData = {
                             code: 'Exception',
                             message: $exMessage,
@@ -4847,10 +4871,42 @@ describe('MyFancyLogger extends Logger', () => {
                                 stack: $err.stack,
                             },
                         };
-                        const $expectedMessagePayload = $logger.construct_message($level, $expectedData);
-                        expect($output).toHaveBeenCalledWith(expect.any(String));
-                        const [[$stringPayload]] = $output.mock.calls;
+                        const $expectedMessagePayload = $logger.construct_message(LoggerLevel.error, $expectedData);
+                        expect(console.error).toHaveBeenCalledWith(expect.any(String));
+                        const [[$stringPayload]] = console.error.mock.calls;
                         expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
+                    });
+                });
+                describe('when log level is', () => {
+                    describe.each($LOG_LEVELS)('%s', (_$, $level, $output) => {
+                        const $mocks = taggedMocks('MyFancyLogger->exception');
+                        const $exMessage = $mocks.uniqueSafeTag('message');
+                        const $err = new Error($mocks.uniqueSafeTag('err'));
+                        const $exData = {
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
+                            baz: $mocks.uniqueSafeTag('baz'),
+                        };
+                        const $ex = new Exception($exMessage, $exData, $err);
+                        beforeAll(() => {
+                            $output.mockClear();
+                            $logger.exception($ex, $level);
+                        });
+                        test('calls expected output with expected payload', () => {
+                            const $expectedData = {
+                                code: 'Exception',
+                                message: $exMessage,
+                                data: $exData,
+                                err: {
+                                    message: $err.message,
+                                    stack: $err.stack,
+                                },
+                            };
+                            const $expectedMessagePayload = $logger.construct_message($level, $expectedData);
+                            expect($output).toHaveBeenCalledWith(expect.any(String));
+                            const [[$stringPayload]] = $output.mock.calls;
+                            expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
+                        });
                     });
                 });
             });
