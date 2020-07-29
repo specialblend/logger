@@ -1,6 +1,6 @@
 {
-  "main": "lib/main.js",
-  "types": "lib/main.d.ts",
+  "main": "lib/Logger.js",
+  "types": "lib/Logger.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf lib/ coverage/",
