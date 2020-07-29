@@ -4,7 +4,7 @@ type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript
 
 ### Install
 
-`npm install @specialblend/appLogger`
+`npm install @specialblend/logger`
 
 ### Usage
 
