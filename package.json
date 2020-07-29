@@ -35,7 +35,7 @@
   },
   "name": "@specialblend/logger",
   "description": "type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "directories": {
     "lib": "lib"
   },
