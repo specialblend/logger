@@ -1,4 +1,4 @@
-import type { Exceptional } from '@specialblend/exceptional';
+import {Exception, IException} from '@specialblend/exceptional';
 import flatten from 'flat';
 
 export enum LoggerLevel {
