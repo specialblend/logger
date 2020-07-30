@@ -18,7 +18,7 @@
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-typescript": "^7.10.1",
     "@specialblend/eslint-config": "^0.5.4",
-    "@specialblend/exceptional": "0.0.5",
+    "@specialblend/exceptional": "0.0.6",
     "@specialblend/tagged-mocks": "0.0.1",
     "@types/flat": "^5.0.1",
     "@types/jest": "^26.0.3",
