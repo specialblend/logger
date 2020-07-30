@@ -4,7 +4,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf lib/ coverage/",
-    "lint": "eslint .",
+    "lint": "eslint --ext .js,.ts .",
     "test": "jest --coverage"
   },
   "files": [
