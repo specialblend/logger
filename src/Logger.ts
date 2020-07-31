@@ -22,7 +22,7 @@ export interface LoggerOptions {
 
 export type JsonableRecord = Record<string, any>;
 
-export function serializeLogLevel(logLevel: ILogLevel): [LogLevel, string] {
+export function parseLogLevel(logLevel: ILogLevel): [LogLevel, string] {
     if (typeof logLevel === 'number') {
         return [logLevel, LogLevel[logLevel]];
     }
@@ -34,9 +34,9 @@ export class Logger {
     private metadata: JsonableRecord;
 
     constructor(options: LoggerOptions, metadata: JsonableRecord = {}) {
-        const { name, namespace, level } = options;
-        const [levelId] = serializeLogLevel(level);
-        this.options = { name, namespace, level: levelId };
+        const { name, namespace, level: _level } = options;
+        const [level] = parseLogLevel(_level);
+        this.options = { name, namespace, level };
         this.metadata = metadata;
     }
 
@@ -67,7 +67,8 @@ export class Logger {
         return this.sibling(namespace);
     }
 
-    public log<TData extends Record<string, any>>(level: LogLevel, data: TData): void {
+    public log<TData extends Record<string, any>>(log_level: ILogLevel, data: TData): void {
+        const [level] = parseLogLevel(log_level);
         if (level <= this.options.level) {
             const payloadRecord = this.constructMessage(level, data);
             const payloadStr = this.serialize<TData>(level, payloadRecord);
@@ -103,7 +104,7 @@ export class Logger {
         this.log(LogLevel.SILLY, data);
     }
 
-    public exception<TException extends Exception<TData, TError>, TData = Record<string, any>, TError = Error>(ex: TException, level: LogLevel = LogLevel.error): void {
+    public exception<TException extends Exception<TData, TError>, TData = Record<string, any>, TError = Error>(ex: TException, level: LogLevel = LogLevel.ERROR): void {
         const { message, code, data, err } = ex;
         if (typeof err === 'undefined') {
             return this.log(level, { message, code, data });
@@ -112,16 +113,16 @@ export class Logger {
         return this.log(level, { message, code, data, err: { message: _message, stack } });
     }
 
-    protected constructMessage<T extends JsonableRecord>(level: LogLevel, data: T) {
-        const [, $level] = serializeLogLevel(level);
+    protected constructMessage<T extends JsonableRecord>(loglevel: LogLevel, data: T) {
+        const [, level] = parseLogLevel(loglevel);
         const { options, metadata } = this;
         const { name, namespace } = options;
         const type = `${name}.${namespace}`;
         return {
             ...metadata,
             name,
+            log_level: loglevel,
             level,
-            $level,
             type,
             [type]: {
                 ...data,
