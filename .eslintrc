@@ -2,12 +2,13 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-	"@typescript-eslint"
+	"@typescript-eslint",
+	  "snakecasejs"
   ],
   "extends": [
-	"plugin:@typescript-eslint/eslint-recommended",
-	"plugin:@typescript-eslint/recommended",
-	"@specialblend/eslint-config"
+//	"plugin:@typescript-eslint/eslint-recommended",
+//	"plugin:@typescript-eslint/recommended",
+//	"@specialblend/eslint-config"
   ],
   "parserOptions": {
 	"ecmaVersion": 6,
@@ -15,5 +16,13 @@
 	"ecmaFeatures": {
 	  "modules": true
 	}
-  }
+  },
+	"settings": {
+//		"snakecasejs/filter": ["ClassDeclaration", "NewExpression", "VariableDeclarator"],
+//		"snakecasejs/whitelist": []
+		"snakecasejs/filter": ["ClassDeclaration", "NewExpression", "VariableDeclarator", "TSTypeQuery", "TSEnumDeclaration", "TSTypeAliasDeclaration", "TSTypeReference", "TSInterfaceDeclaration", "TSTypeParameter"]
+	},
+	"rules": {
+		"snakecasejs/snakecasejs": "error"
+	}
 }

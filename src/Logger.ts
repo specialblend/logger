@@ -14,6 +14,10 @@ export enum LogLevel {
 export type LogLevelName = keyof typeof LogLevel;
 export type ILogLevel = LogLevel | LogLevelName;
 
+export interface LogRecord<TData> {
+
+}
+
 export interface LoggerOptions {
     name: string
     namespace: string
@@ -70,7 +74,7 @@ export class Logger {
     public log<TData extends Record<string, any>>(logLevel: ILogLevel, data: TData): void {
         const [level] = parseLogLevel(logLevel);
         if (level <= this.options.level) {
-            const payloadRecord = this.constructMessage(level, data);
+            const payloadRecord = this.build_record(level, data);
             const payloadStr = this.serialize<TData>(level, payloadRecord);
             this.write(level, payloadStr);
         }
@@ -113,19 +117,21 @@ export class Logger {
         return this.log(level, { message, code, data, err: { message: _message, stack } });
     }
 
-    protected constructMessage<T extends JsonableRecord>(loglevel: LogLevel, data: T) {
-        const [, level] = parseLogLevel(loglevel);
+    protected build_record<T extends JsonableRecord>(loglevel: LogLevel, data: T) {
+        const [, levelLabel] = parseLogLevel(loglevel);
         const { options, metadata } = this;
         const { name, namespace } = options;
         const type = `${name}.${namespace}`;
         return {
             ...metadata,
             name,
-            log_level: loglevel,
-            level,
-            type,
-            [type]: {
-                ...data,
+            '#level': loglevel,
+            '@level': levelLabel,
+            '@type': type,
+            '@payload': {
+                [type]: {
+                    ...data,
+                },
             },
         };
     }
