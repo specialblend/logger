@@ -67,8 +67,8 @@ export class Logger {
         return this.sibling(namespace);
     }
 
-    public log<TData extends Record<string, any>>(log_level: ILogLevel, data: TData): void {
-        const [level] = parseLogLevel(log_level);
+    public log<TData extends Record<string, any>>(logLevel: ILogLevel, data: TData): void {
+        const [level] = parseLogLevel(logLevel);
         if (level <= this.options.level) {
             const payloadRecord = this.constructMessage(level, data);
             const payloadStr = this.serialize<TData>(level, payloadRecord);
