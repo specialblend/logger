@@ -1,7 +1,7 @@
-import { Logger, LoggerLevel } from './src/Logger';
+import { Logger, LogLevel } from './src/Logger';
 
 (function main() {
-    const appLogger = new Logger({ name: 'myApp', namespace: 'app', level: LoggerLevel.silly });
+    const appLogger = new Logger({ name: 'myApp', namespace: 'app', level: LogLevel.silly });
     appLogger.silly({
         message: 'you are awesome.',
         foo: 'test foo',
