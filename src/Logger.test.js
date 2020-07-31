@@ -1,11 +1,12 @@
+/* eslint-disable no-void */
 import { Exception } from '@specialblend/exceptional';
 import { taggedMocks } from '@specialblend/tagged-mocks';
 import flatten from 'flat';
 
 import createLogger, { Logger, LogLevel } from './Logger';
 
-console.log = jest.fn(console.log);
-console.error = jest.fn(console.error);
+console.log = jest.fn(void console.log);
+console.error = jest.fn(void console.error);
 
 const $LOG_LEVELS = [
     ['LoggerLevel.fatal', LogLevel.FATAL, console.error],
