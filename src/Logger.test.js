@@ -1422,10 +1422,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_trace.child).toBeFunction();
                     });
                     describe('when called', () => {
-                        const $metadata = {
+                        const $app_logger_trace_metadata = {
                             foo: 'test_foo',
                         };
-                        const $app_logger_trace_child = $app_logger_trace.child($metadata);
+                        const $app_logger_trace_child = $app_logger_trace.child($app_logger_trace_metadata);
                         test('it returns expected Logger', () => {
                             expect($app_logger_trace_child).toBeInstanceOf(Logger);
                             expect($app_logger_trace_child).toBeInstanceOf(AppLogger);
@@ -1433,8 +1433,8 @@ describe('AppLogger extends Logger', () => {
                             expect($app_logger_trace_child.options.namespace).toBe($app_logger_trace.options.namespace);
                             expect($app_logger_trace_child.metadata).toBeInstanceOf(Object);
                             expect($app_logger_trace_child.metadata).toMatchObject({
-                                ...$metadata,
-                                ...$metadata,
+                                ...$app_logger_trace_metadata,
+                                ...$app_logger_trace_metadata,
                             });
                         });
                         describe('logger method', () => {
@@ -2005,10 +2005,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_debug.child).toBeFunction();
                     });
                     describe('when called', () => {
-                        const $metadata = {
+                        const $app_logger_debug_child_metadata = {
                             foo: 'test_foo',
                         };
-                        const $app_logger_debug_child = $app_logger_debug.child($metadata);
+                        const $app_logger_debug_child = $app_logger_debug.child($app_logger_debug_child_metadata);
                         test('it returns expected Logger', () => {
                             expect($app_logger_debug_child).toBeInstanceOf(Logger);
                             expect($app_logger_debug_child).toBeInstanceOf(AppLogger);
@@ -2016,8 +2016,8 @@ describe('AppLogger extends Logger', () => {
                             expect($app_logger_debug_child.options.namespace).toBe($app_logger_debug.options.namespace);
                             expect($app_logger_debug_child.metadata).toBeInstanceOf(Object);
                             expect($app_logger_debug_child.metadata).toMatchObject({
-                                ...$metadata,
-                                ...$metadata,
+                                ...$app_logger_debug_child_metadata,
+                                ...$app_logger_debug_child_metadata,
                             });
                         });
                         describe('logger method', () => {
@@ -2588,10 +2588,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_info.child).toBeFunction();
                     });
                     describe('when called', () => {
-                        const $metadata = {
+                        const $app_logger_info_child_metadata = {
                             foo: 'test_foo',
                         };
-                        const $app_logger_info_child = $app_logger_info.child($metadata);
+                        const $app_logger_info_child = $app_logger_info.child($app_logger_info_child_metadata);
                         test('it returns expected Logger', () => {
                             expect($app_logger_info_child).toBeInstanceOf(Logger);
                             expect($app_logger_info_child).toBeInstanceOf(AppLogger);
@@ -2599,8 +2599,8 @@ describe('AppLogger extends Logger', () => {
                             expect($app_logger_info_child.options.namespace).toBe($app_logger_info.options.namespace);
                             expect($app_logger_info_child.metadata).toBeInstanceOf(Object);
                             expect($app_logger_info_child.metadata).toMatchObject({
-                                ...$metadata,
-                                ...$metadata,
+                                ...$app_logger_info_child_metadata,
+                                ...$app_logger_info_child_metadata,
                             });
                         });
                         describe('logger method', () => {

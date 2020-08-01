@@ -34,7 +34,7 @@ async function moodring(logger: Logger, mood = Math.round(Math.random() * 7)) {
             mood,
         });
 
-        ({}).bar.baz;
+        throw new TypeError;
 
     }
 
