@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Exception } from '@specialblend/exceptional';
 import flatten from 'flat';
 
@@ -76,23 +75,18 @@ export function construct_record<TData extends JsonableRecord>(logger: Logger, l
     };
 }
 
-export function serialize<T extends JsonableRecord>(level: LogLevel, payload: JsonableRecord): string {
-    return JSON.stringify(flatten(payload));
+export function normalize_record(payload: LogRecord): LogRecord {
+    return flatten({
+        ... payload,
+        data: flatten(payload.data),
+    });
 }
 
-function write_stderr(payload: string): void {
-    return console.error(payload);
-}
-
-function write_stdout(payload: string): void {
-    return console.log(payload);
-}
-
-function write(level: LogLevel, payload: string): void {
+function write(level: LogLevel, payload: LogRecord): void {
     if (level <= LogLevel.ERROR) {
-        return write_stderr(payload);
+        return console.error('%j', payload);
     }
-    return write_stdout(payload);
+    return console.log('%j', payload);
 }
 
 export class Logger {
@@ -137,8 +131,8 @@ export class Logger {
         const [level] = parse_loglevel(loglevel);
         if (level <= this.options.level) {
             const log_record = construct_record(this, level, data);
-            const log_record_str = serialize<TData>(level, log_record);
-            write(level, log_record_str);
+            const log_record_normalized = normalize_record(log_record);
+            write(level, log_record_normalized);
         }
     }
 
@@ -177,10 +171,6 @@ export class Logger {
         }
         const { message: _message, stack } = err as unknown as Error;
         return this.log(level, { message, code, data, err: { message: _message, stack } });
-    }
-
-    protected construct_record<TData extends JsonableRecord>(loglevel: LogLevel, data: TData): LogRecord {
-        return construct_record(this, loglevel, data);
     }
 }
 
