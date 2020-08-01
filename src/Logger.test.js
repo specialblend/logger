@@ -2,7 +2,7 @@
 import { Exception } from '@specialblend/exceptional';
 import { taggedMocks } from '@specialblend/tagged-mocks';
 
-import createLogger, { construct_record, Logger, LogLevel, normalize_record } from './Logger';
+import createLogger, { construct_record, Logger, LogLevel, normalize_record, parse_loglevel } from './Logger';
 
 console.log = jest.fn(void console.log);
 console.error = jest.fn(void console.error);
@@ -16,6 +16,12 @@ const $LOG_LEVELS = [
     ['LoggerLevel.TRACE', LogLevel.TRACE, console.log],
     ['LoggerLevel.SILLY', LogLevel.SILLY, console.log],
 ];
+
+function taggedMocksForLogger($logger, $method_name, $class_name = $logger.constructor.name) {
+    const { level } = $logger.options;
+    const [, level_name] = parse_loglevel(level);
+    return taggedMocks(`(<new ${$class_name}({ level: LogLevel.${level_name} })>)->${$method_name}`);
+}
 
 describe('createLogger', () => {
     test('is Function', () => {
@@ -114,8 +120,8 @@ describe('AppLogger extends Logger', () => {
     describe('when called', () => {
         describe('without loglevel', () => {
             const $options = {
-                name: 'test_app',
-                namespace: 'test_namespace',
+                name: 'app_logger',
+                namespace: 'app_logger_namespae',
                 level: LogLevel.SILLY,
             };
             const $metadata = {
@@ -4205,9 +4211,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.fatal).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'fatal');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.fatal($data);
@@ -4223,9 +4230,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.error).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'error');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.error($data);
@@ -4241,9 +4249,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.debug).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'debug');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.debug($data);
@@ -4259,9 +4268,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.warn).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'warn');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.warn($data);
@@ -4277,9 +4287,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.info).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'info');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.info($data);
@@ -4295,9 +4306,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.trace).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'trace');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.trace($data);
@@ -4313,9 +4325,10 @@ describe('AppLogger extends Logger', () => {
                         expect($app_logger_fatal.silly).toBeFunction();
                     });
                     describe('when called', () => {
+                        const $mocks = taggedMocksForLogger($app_logger_fatal, 'silly');
                         const $data = {
-                            foo: 'test.foo',
-                            bar: 'test.bar',
+                            foo: $mocks.uniqueSafeTag('foo'),
+                            bar: $mocks.uniqueSafeTag('bar'),
                         };
                         beforeAll(() => {
                             $app_logger_fatal.silly($data);
@@ -4354,9 +4367,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.fatal).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'fatal');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.fatal($data);
@@ -4372,9 +4386,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.error).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'error');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.error($data);
@@ -4390,9 +4405,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.debug).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'debug');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.debug($data);
@@ -4408,9 +4424,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.warn).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'warn');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.warn($data);
@@ -4426,9 +4443,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.info).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'info');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.info($data);
@@ -4444,9 +4462,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.trace).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'trace');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.trace($data);
@@ -4462,9 +4481,10 @@ describe('AppLogger extends Logger', () => {
                                     expect($logger.silly).toBeFunction();
                                 });
                                 describe('when called', () => {
+                                    const $mocks = taggedMocksForLogger($logger, 'silly');
                                     const $data = {
-                                        foo: 'test.foo',
-                                        bar: 'test.bar',
+                                        foo: $mocks.uniqueSafeTag('foo'),
+                                        bar: $mocks.uniqueSafeTag('bar'),
                                     };
                                     beforeAll(() => {
                                         $logger.silly($data);
