@@ -26,7 +26,7 @@ export interface LoggerOptions {
     level: ILogLevel,
 }
 
-export interface LogRecord<LoggerNamespace> {
+export interface LogRecord {
 
     /* name of the logger */
     '@name': string,
