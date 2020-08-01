@@ -1,14 +1,19 @@
 import { Exception } from '@specialblend/exceptional';
 import flatten from 'flat';
 
+export type JsonableRecord = Record<string, any>;
+
 export enum LogLevel {
-    FATAL,
-    ERROR,
-    WARN,
-    INFO,
-    DEBUG,
-    TRACE,
-    SILLY,
+    SILENT = -1,
+    FATAL = 0,
+    ERROR = 1,
+    WARN = 2,
+    INFO = 3,
+    DEBUG = 4,
+    TRACE = 5,
+    SILLY = 6,
+    // eslint-disable-next-line no-inline-comments
+    SECRET= 7 // this one mines bitcoin (just kidding)
 }
 
 export type LogLevelName = keyof typeof LogLevel;
@@ -20,23 +25,78 @@ export interface LoggerOptions {
     level: ILogLevel,
 }
 
-export type JsonableRecord = Record<string, any>;
+export interface LogRecord {
 
-export function parseLogLevel(logLevel: ILogLevel): [LogLevel, string] {
-    if (typeof logLevel === 'number') {
-        return [logLevel, LogLevel[logLevel]];
+    /* name of the logger */
+    '@name': string,
+
+    /* namespace of the logger */
+    '@type': string,
+
+    /**
+     * numeric log level (0-6)
+     */
+    '#loglevel': LogLevel,
+
+    /**
+     * string log level
+     */
+    '@loglevel': LogLevelName,
+
+    /**
+     * payload
+     */
+    data: JsonableRecord
+}
+
+export function parse_loglevel(level: ILogLevel): [LogLevel, LogLevelName] {
+    if (typeof level === 'number') {
+        return [level, LogLevel[level] as LogLevelName];
     }
-    return [LogLevel[logLevel], logLevel];
+    return [LogLevel[level], level];
+}
+
+export function construct_record<TData extends JsonableRecord>(logger: Logger, loglevel: LogLevel, data: TData): LogRecord {
+    const [, loglevel_name] = parse_loglevel(loglevel);
+    const { options, metadata } = logger;
+    const { name, namespace } = options;
+    const type = `${name}.${namespace}`;
+    return {
+        ...metadata,
+        '@name': name,
+        '#loglevel': loglevel,
+        '@loglevel': loglevel_name,
+        '@type': type,
+        data: {
+            [namespace]: {
+                ...data,
+            },
+        },
+    };
+}
+
+export function normalize_record(payload: LogRecord): LogRecord {
+    return flatten({
+        ... payload,
+        data: flatten(payload.data),
+    });
+}
+
+function write(level: LogLevel, payload: LogRecord): void {
+    if (level <= LogLevel.ERROR) {
+        return console.error('%j', payload);
+    }
+    return console.log('%j', payload);
 }
 
 export class Logger {
-    private options: LoggerOptions;
-    private metadata: JsonableRecord;
+    public options: LoggerOptions;
+    public metadata: JsonableRecord;
 
     constructor(options: LoggerOptions, metadata: JsonableRecord = {}) {
-        const { name, namespace, level: _level } = options;
-        const [level] = parseLogLevel(_level);
-        this.options = { name, namespace, level };
+        const { name, namespace, level: level } = options;
+        const [loglevel] = parse_loglevel(level);
+        this.options = { name, namespace, level: loglevel };
         this.metadata = metadata;
     }
 
@@ -45,7 +105,7 @@ export class Logger {
      */
     public child(metadata: JsonableRecord): Logger {
         const __Constructor = this.constructor as new (options: LoggerOptions, metadata: JsonableRecord) => Logger;
-        return new __Constructor(this.options, { ... this.metadata, ... metadata });
+        return new __Constructor(this.options, { ...this.metadata, ...metadata });
     }
 
     /*
@@ -63,16 +123,16 @@ export class Logger {
     /*
      * alias of sibling
      */
-    public type(namespace: string) {
+    public type(namespace: string): Logger {
         return this.sibling(namespace);
     }
 
-    public log<TData extends Record<string, any>>(logLevel: ILogLevel, data: TData): void {
-        const [level] = parseLogLevel(logLevel);
+    public log<TData extends Record<string, any>>(loglevel: ILogLevel, data: TData): void {
+        const [level] = parse_loglevel(loglevel);
         if (level <= this.options.level) {
-            const payloadRecord = this.constructMessage(level, data);
-            const payloadStr = this.serialize<TData>(level, payloadRecord);
-            this.write(level, payloadStr);
+            const log_record = construct_record(this, level, data);
+            const log_record_normalized = normalize_record(log_record);
+            write(level, log_record_normalized);
         }
     }
 
@@ -111,42 +171,6 @@ export class Logger {
         }
         const { message: _message, stack } = err as unknown as Error;
         return this.log(level, { message, code, data, err: { message: _message, stack } });
-    }
-
-    protected constructMessage<T extends JsonableRecord>(loglevel: LogLevel, data: T) {
-        const [, level] = parseLogLevel(loglevel);
-        const { options, metadata } = this;
-        const { name, namespace } = options;
-        const type = `${name}.${namespace}`;
-        return {
-            ...metadata,
-            name,
-            log_level: loglevel,
-            level,
-            type,
-            [type]: {
-                ...data,
-            },
-        };
-    }
-
-    protected serialize<T extends JsonableRecord>(level: LogLevel, payload: JsonableRecord): string {
-        return JSON.stringify(flatten(payload));
-    }
-
-    protected writeStdErr(payload: string): void {
-        return console.error(payload);
-    }
-
-    protected writeStdOut(payload: string): void {
-        return console.log(payload);
-    }
-
-    protected write(level: LogLevel, payload: string): void {
-        if (level <= LogLevel.ERROR) {
-            return this.writeStdErr(payload);
-        }
-        return this.writeStdOut(payload);
     }
 }
 

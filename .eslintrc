@@ -15,5 +15,8 @@
 	"ecmaFeatures": {
 	  "modules": true
 	}
-  }
+  },
+	"rules": {
+		"camelcase": "off"
+	}
 }

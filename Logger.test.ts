@@ -1,20 +1,96 @@
-# Logger
-
-type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript
-
-### Install
-
-`npm install @specialblend/logger`
-
-### Usage
-
-```typescript
+/**
+ * am i javascript that thinks it's rust?
+ */
+/* eslint-disable camelcase */
 
 import 'jest-extended';
 
 import cuid from 'cuid';
 
 import { Logger, LoggerOptions, LogLevel } from './src/Logger';
+
+async function moodring(logger: Logger, mood = Math.round(Math.random() * 7)) {
+
+    logger.type('moodring_thinking').silly({
+        message: 'Magic Mirror, on the wall, who, now, is the fairest one of all?',
+        mood: -1,
+    });
+
+    const level = LogLevel[mood];
+
+    logger.type('moodring_ready').info({
+        mood,
+    });
+
+    logger.type('moodring_acting').silly({
+        message: 'i am tipsy.',
+        mood,
+    });
+
+    if (mood < 1) {
+
+        logger.type('moodring_acting').fatal({
+            message: 'i am dead.',
+            mood,
+        });
+
+        throw new TypeError;
+
+    }
+
+    if (mood < 2) {
+
+        logger.type('moodring_acting').error({
+            message: 'am i dead?',
+            mood,
+        });
+
+        throw new Error;
+
+    }
+
+    if (mood < 3) {
+
+        logger.type('moodring_acting').warn({
+            message: 'i am not good.',
+            mood,
+        });
+
+        Promise.reject();
+
+    }
+
+    if (mood < 4) {
+
+        logger.type('moodring_acting').info({
+            message: 'i am okay.',
+            mood,
+        });
+
+    }
+
+    if (mood < 5) {
+
+        logger.type('moodring_acting').debug({
+            message: 'i am good.',
+            mood,
+        });
+
+    }
+
+    if (mood < 6) {
+
+        logger.type('moodring_acting').trace({
+            message: 'i am great.',
+            mood,
+        });
+
+    }
+
+    logger.type('moodring_complete').debug({
+        mood,
+    });
+}
 
 describe('Logger', () => {
     const logger_options: LoggerOptions = {
@@ -42,7 +118,7 @@ describe('Logger', () => {
                     config,
                 });
 
-                throw new Error;
+                await moodring(logger, 0);
 
                 logger.info({
                     message: 'ok. i have booted the server with this configuration.',
@@ -107,14 +183,3 @@ describe('Logger', () => {
         }());
     });
 });
-
-```
-
-### Philosophy
-
-write logs for machines, not for humans.
-
-- logs should be JSON
-- logs should be typed (namespaced) to 
-  - allow machines to analyze them properly
-  - allow timeseries data storage (e.g. elastic) to index them properly
