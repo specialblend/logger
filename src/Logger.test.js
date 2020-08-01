@@ -172,7 +172,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -190,7 +190,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -208,7 +208,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -226,7 +226,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -244,7 +244,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -262,7 +262,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -280,7 +280,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -753,7 +753,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -771,7 +771,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -789,7 +789,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -807,7 +807,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -825,7 +825,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -843,7 +843,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -861,7 +861,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1334,7 +1334,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1352,7 +1352,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1370,7 +1370,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1388,7 +1388,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1406,7 +1406,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1424,7 +1424,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1442,7 +1442,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1915,7 +1915,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1933,7 +1933,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1952,7 +1952,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
 
@@ -1971,7 +1971,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -1989,7 +1989,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2007,7 +2007,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2025,7 +2025,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2102,7 +2102,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.warn($data);
                                     });
                                     test('writes to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2120,7 +2120,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.info($data);
                                     });
                                     test('writes to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2156,7 +2156,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2246,7 +2246,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2264,7 +2264,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2300,7 +2300,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2389,7 +2389,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2407,7 +2407,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2444,7 +2444,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2500,7 +2500,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2518,7 +2518,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2536,7 +2536,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2554,7 +2554,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2572,7 +2572,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2590,7 +2590,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2608,7 +2608,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -2721,7 +2721,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2739,7 +2739,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -2882,7 +2882,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3026,7 +3026,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3082,7 +3082,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3100,7 +3100,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3119,7 +3119,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('writes to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3137,7 +3137,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3155,7 +3155,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3173,7 +3173,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3191,7 +3191,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3304,7 +3304,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3322,7 +3322,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3429,7 +3429,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3465,7 +3465,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3572,7 +3572,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3608,7 +3608,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3664,7 +3664,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3682,7 +3682,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('writes to expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3700,7 +3700,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3718,7 +3718,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3736,7 +3736,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3754,7 +3754,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3772,7 +3772,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -3849,7 +3849,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3867,7 +3867,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3885,7 +3885,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3903,7 +3903,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -3992,7 +3992,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4010,7 +4010,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4028,7 +4028,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4046,7 +4046,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4135,7 +4135,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4153,7 +4153,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4171,7 +4171,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4189,7 +4189,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4245,7 +4245,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.fatal($data);
                         });
                         test('calls expected stderr with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.constructMessage(LogLevel.FATAL, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.FATAL, $myFancyLogger.construct_record(LogLevel.FATAL, $data));
                             expect(console.error).toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4263,7 +4263,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.error($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4281,7 +4281,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.debug($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4299,7 +4299,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.warn($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4317,7 +4317,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.info($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4335,7 +4335,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.trace($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4353,7 +4353,7 @@ describe('MyFancyLogger extends Logger', () => {
                             $myFancyLogger.silly($data);
                         });
                         test('does NOT write to expected stdout with expected payload', () => {
-                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.constructMessage(LogLevel.SILLY, $data));
+                            const $expectedMessage = $myFancyLogger.serialize(LogLevel.SILLY, $myFancyLogger.construct_record(LogLevel.SILLY, $data));
                             expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                         });
                     });
@@ -4412,7 +4412,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.error($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4430,7 +4430,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4448,7 +4448,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4466,7 +4466,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4484,7 +4484,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $myFancyChildLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4555,7 +4555,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.error($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4573,7 +4573,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4591,7 +4591,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4609,7 +4609,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4627,7 +4627,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4698,7 +4698,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.error($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.constructMessage(LogLevel.ERROR, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.ERROR, $myFancyLogger.construct_record(LogLevel.ERROR, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4716,7 +4716,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.debug($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.constructMessage(LogLevel.DEBUG, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.DEBUG, $myFancyLogger.construct_record(LogLevel.DEBUG, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4734,7 +4734,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.warn($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.constructMessage(LogLevel.WARN, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.WARN, $myFancyLogger.construct_record(LogLevel.WARN, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4752,7 +4752,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.info($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.constructMessage(LogLevel.INFO, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.INFO, $myFancyLogger.construct_record(LogLevel.INFO, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4770,7 +4770,7 @@ describe('MyFancyLogger extends Logger', () => {
                                         $mySuperFancySiblingLogger.trace($data);
                                     });
                                     test('does NOT write to expected stdout with expected payload', () => {
-                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.constructMessage(LogLevel.TRACE, $data));
+                                        const $expectedMessage = $myFancyLogger.serialize(LogLevel.TRACE, $myFancyLogger.construct_record(LogLevel.TRACE, $data));
                                         expect(console.log).not.toHaveBeenCalledWith($expectedMessage);
                                     });
                                 });
@@ -4831,7 +4831,7 @@ describe('MyFancyLogger extends Logger', () => {
                             message: $exMessage,
                             data: $exData,
                         };
-                        const $expectedMessagePayload = $logger.constructMessage(LogLevel.ERROR, $expectedData);
+                        const $expectedMessagePayload = $logger.construct_record(LogLevel.ERROR, $expectedData);
                         expect(console.error).toHaveBeenCalledWith(expect.any(String));
                         const [[$stringPayload]] = console.error.mock.calls;
                         expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
@@ -4857,7 +4857,7 @@ describe('MyFancyLogger extends Logger', () => {
                                 message: $exMessage,
                                 data: $exData,
                             };
-                            const $expectedMessagePayload = $logger.constructMessage($level, $expectedData);
+                            const $expectedMessagePayload = $logger.construct_record($level, $expectedData);
                             expect($output).toHaveBeenCalledWith(expect.any(String));
                             const [[$stringPayload]] = $output.mock.calls;
                             expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
@@ -4890,7 +4890,7 @@ describe('MyFancyLogger extends Logger', () => {
                                 stack: $err.stack,
                             },
                         };
-                        const $expectedMessagePayload = $logger.constructMessage(LogLevel.ERROR, $expectedData);
+                        const $expectedMessagePayload = $logger.construct_record(LogLevel.ERROR, $expectedData);
                         expect(console.error).toHaveBeenCalledWith(expect.any(String));
                         const [[$stringPayload]] = console.error.mock.calls;
                         expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
@@ -4921,7 +4921,7 @@ describe('MyFancyLogger extends Logger', () => {
                                     stack: $err.stack,
                                 },
                             };
-                            const $expectedMessagePayload = $logger.constructMessage($level, $expectedData);
+                            const $expectedMessagePayload = $logger.construct_record($level, $expectedData);
                             expect($output).toHaveBeenCalledWith(expect.any(String));
                             const [[$stringPayload]] = $output.mock.calls;
                             expect(JSON.parse($stringPayload)).toMatchObject(flatten($expectedMessagePayload));
