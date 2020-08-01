@@ -142,4 +142,44 @@ describe('Logger', () => {
             }
         }());
     });
+    test('namespace: custom', async() => {
+        await (async function boot() {
+
+            const config = {
+                env: {
+                    PORT: process.env.PORT,
+                    NODE_ENV: process.env.NODE_ENV,
+                },
+            };
+
+            try {
+                logger.type('app_booting').trace({
+                    message: 'i am about to boot the server with this configuration.',
+                    config,
+                });
+
+                await moodring(logger, 0);
+
+                logger.type('app_booted').info({
+                    message: 'ok. i have booted the server with this configuration.',
+                    config,
+                });
+
+            } catch (err) {
+
+                const { message, stack } = err;
+
+                logger.type('app_boot_failed').error({
+                    message: 'an unhandled error has occured',
+                    err: {
+                        message,
+                        stack,
+                    },
+                    config,
+                });
+
+                console.error(err);
+            }
+        }());
+    });
 });

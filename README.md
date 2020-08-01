@@ -8,42 +8,105 @@ type-safe, namespaced, normalized JSON logger for JavaScript and TypeScript
 
 ### Usage
 
-```
+```typescript
 
-import { Logger, LoggerLevel } from './src/Logger';
+import 'jest-extended';
 
-(function main() {
-    const appLogger = new Logger({ name: 'myApp', namespace: 'app', level: LoggerLevel.silly });
-    appLogger.silly({
-        message: 'you are awesome.',
-        foo: 'test foo',
-    });
-    appLogger.trace({
-        message: 'I talk too much.',
-        bar: 'test bar',
-    });
-    appLogger.info({
-        message: 'I am working just fine.',
-        baz: 'test baz',
-    });
-    appLogger.debug({
-        message: 'Here is more information about stuff when stuff broke.',
-        foo: 'test foo',
-    });
-    appLogger.warn({
-        message: 'This shouldn\'t be happening. You should be ashamed of yourself.',
-        bar: 'test bar',
-    });
-    appLogger.error({
-        message: 'I am not quite dying, but something really bad happened. Fix me.',
-        baz: 'test baz',
-    });
-    appLogger.fatal({
-        message: 'I am dying because I can\'t handle this error.',
-        faz: 'test faz',
-    });
-}());
+import cuid from 'cuid';
 
+import { Logger, LoggerOptions, LogLevel } from './src/Logger';
+
+describe('Logger', () => {
+    const logger_options: LoggerOptions = {
+        level: LogLevel.SILLY,
+        name: 'parabellum',
+        namespace: 'boot',
+    };
+    const logger_metadata = {
+        instance_id: cuid(),
+    };
+    const logger = new Logger(logger_options, logger_metadata);
+    test('namespace: boot', async() => {
+        await (async function boot() {
+
+            const config = {
+                env: {
+                    PORT: process.env.PORT,
+                    NODE_ENV: process.env.NODE_ENV,
+                },
+            };
+
+            try {
+                logger.trace({
+                    message: 'i am about to boot the server with this configuration.',
+                    config,
+                });
+
+                throw new Error;
+
+                logger.info({
+                    message: 'ok. i have booted the server with this configuration.',
+                    config,
+                });
+
+            } catch (err) {
+
+                const { message, stack } = err;
+
+                logger.error({
+                    message: 'an unhandled error has occured',
+                    err: {
+                        message,
+                        stack,
+                    },
+                    config,
+                });
+
+                console.error(err);
+            }
+        }());
+    });
+    test('namespace: custom', async() => {
+        await (async function boot() {
+
+            const config = {
+                env: {
+                    PORT: process.env.PORT,
+                    NODE_ENV: process.env.NODE_ENV,
+                },
+            };
+
+            try {
+                logger.type('app_booting').trace({
+                    message: 'i am about to boot the server with this configuration.',
+                    config,
+                });
+
+                await moodring(logger, 0);
+
+                logger.type('app_booted').info({
+                    message: 'ok. i have booted the server with this configuration.',
+                    config,
+                });
+
+            } catch (err) {
+
+                const { message, stack } = err;
+
+                logger.type('app_boot_failed').error({
+                    message: 'an unhandled error has occured',
+                    err: {
+                        message,
+                        stack,
+                    },
+                    config,
+                });
+
+                console.error(err);
+            }
+        }());
+    });
+});
 
 ```
 
