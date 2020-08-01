@@ -4187,13 +4187,13 @@ describe('AppLogger extends Logger', () => {
         });
         describe('when loglevel = LoggerLevel.fatal', () => {
             const $options = {
-                name: 'test_app6',
-                namespace: 'test_namespace6',
+                name: 'test_app',
+                namespace: 'test_namespace',
                 level: LogLevel.FATAL,
             };
             const $metadata = {
-                alpha5: 'alpha.test5',
-                bravo5: 'bravo.test5',
+                alpha: 'alpha.test',
+                bravo: 'bravo.test',
             };
             const $app_logger_fatal = new AppLogger($options, $metadata);
             test('it returns instance of Logger', () => {
@@ -4647,9 +4647,10 @@ describe('AppLogger extends Logger', () => {
                                     beforeAll(() => {
                                         $app_logger_fatal_type_sibling.fatal($data);
                                     });
-                                    const $expected_record = construct_record($app_logger_fatal_type_sibling, LogLevel.FATAL, $data);
-                                    const $expected_normalized_record = normalize_record($expected_record);
-                                    expect(console.error).toHaveBeenCalledWith('%j', $expected_normalized_record);
+                                    test('does NOT write to expected stdout with expected payload', () => {
+                                        const $expected_message = normalize_record(construct_record($app_logger_fatal_type_sibling, LogLevel.FATAL, $data));
+                                        expect(console.error).toHaveBeenCalledWith('%j', $expected_message);
+                                    });
                                 });
                             });
                             describe('error', () => {
@@ -4664,9 +4665,9 @@ describe('AppLogger extends Logger', () => {
                                     beforeAll(() => {
                                         $app_logger_fatal_type_sibling.error($data);
                                     });
-                                    test('does NOT write to expected stdout with expected payload', () => {
+                                    test('does NOT write to expected stderr with expected payload', () => {
                                         const $expected_message = normalize_record(construct_record($app_logger_fatal_type_sibling, LogLevel.ERROR, $data));
-                                        expect(console.log).not.toHaveBeenCalledWith('%j', $expected_message);
+                                        expect(console.error).not.toHaveBeenCalledWith('%j', $expected_message);
                                     });
                                 });
                             });
