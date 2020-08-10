@@ -23,6 +23,11 @@ function taggedMocksForLogger($logger, $method_name, $class_name = $logger.const
     return taggedMocks(`(<new ${$class_name}({ level: LogLevel.${level_name} })>)->${$method_name}`);
 }
 
+beforeAll(function freeze_time() {
+    const now = Date.now();
+    Date.now = jest.fn(() => now);
+});
+
 describe('createLogger', () => {
     test('is Function', () => {
         expect(createLogger).toBeFunction();
