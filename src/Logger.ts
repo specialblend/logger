@@ -27,6 +27,12 @@ export interface LoggerOptions {
 
 export interface LogRecord {
 
+    /**/
+    '#timestamp': number;
+
+    /* ISO timestamp */
+    '@timestamp': string;
+
     /* name of the logger */
     '@name': string,
 
@@ -57,12 +63,16 @@ export function parse_loglevel(level: ILogLevel): [LogLevel, LogLevelName] {
 }
 
 export function construct_record<TData extends JsonableRecord>(logger: Logger, loglevel: LogLevel, data: TData): LogRecord {
+    const timestamp_unix = Date.now();
+    const timestamp_iso = new Date(timestamp_unix).toISOString();
     const [, loglevel_name] = parse_loglevel(loglevel);
     const { options, metadata } = logger;
     const { name, namespace } = options;
     const type = `${name}.${namespace}`;
     return {
         ...metadata,
+        '#timestamp': timestamp_unix,
+        '@timestamp': timestamp_iso,
         '@name': name,
         '#loglevel': loglevel,
         '@loglevel': loglevel_name,
